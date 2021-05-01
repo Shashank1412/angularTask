@@ -1,0 +1,136 @@
+<div class="datatable table-responsive">
+  <div>
+    <div class="row mb-4">
+      <div class="col-sm-12" style="overflow-x: scroll;">
+        <table *ngIf="(pageDetails == 'post' || pageDetails == 'albums' || pageDetails == 'todo')" class="table table-bordered table-hover mb-0" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>User Id</th>
+              <th>Id</th>
+              <th>Title</th>
+              <th *ngIf="pageDetails == 'post'">Body</th>
+              <th *ngIf="pageDetails == 'todo'">Complete</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of list | paginate: { itemsPerPage: 10, currentPage: p }">
+              <td>{{record.userId}}</td>
+              <td>{{record.id}}</td>
+              <td>{{record.title}}</td>
+              <td *ngIf="record.body">{{record.body}}</td>
+              <td *ngIf="pageDetails == 'todo'">{{record.completed}}</td>
+              <td *ngIf="pageDetails == 'post'" style="width: 3%;cursor: pointer;" [routerLink]="['/edit-posts', record.id]"> <!--   -->
+                <i class="far fa-edit"></i>
+              </td>
+              <td *ngIf="pageDetails == 'albums'" style="width: 3%;cursor: pointer;" [routerLink]="['/edit-albums', record.id]">
+                <i class="far fa-edit"></i>
+              </td>
+              <td *ngIf="pageDetails == 'todo'" style="width: 3%;cursor: pointer;" [routerLink]="['/edit-todo', record.id]">
+                <i class="far fa-edit"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table *ngIf="pageDetails == 'comments'" class="table table-bordered table-hover mb-0" id="dataTable" width="100%"
+        cellspacing="0">
+        <thead>
+          <tr>
+            <th>Post Id</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Body</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of list | paginate: { itemsPerPage: 10, currentPage: p }">
+            <td>{{record.postId}}</td>
+            <td>{{record.id}}</td>
+            <td>{{record.name}}</td>
+            <td>{{record.email}}</td>
+            <td>{{record.body}}</td>
+            <td style="width: 3%;cursor: pointer;" [routerLink]="['/edit-comments', record.id]">
+              <!--   -->
+              <i class="far fa-edit"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table *ngIf="pageDetails == 'photos'" class="table table-bordered table-hover mb-0" id="dataTable" width="100%"
+      cellspacing="0">
+      <thead>
+        <tr>
+          <th>Album Id</th>
+          <th>Id</th>
+          <th>Title</th>
+          <th>URL</th>
+          <th>Thumbnail Url</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of list | paginate: { itemsPerPage: 10, currentPage: p }">
+          <td>{{record.albumId}}</td>
+          <td>{{record.id}}</td>
+          <td>{{record.title}}</td>
+          <td>{{record.url}}</td>
+          <td>{{record.thumbnailUrl}}</td>
+          <td style="width: 3%;cursor: pointer;" [routerLink]="['/edit-photos', record.id]">
+            <!--   -->
+            <i class="far fa-edit"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table *ngIf="pageDetails == 'user'" class="table table-bordered table-hover mb-0" id="dataTable" width="100%"
+    cellspacing="0">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Address</th>
+        <th>phone </th>
+        <th>website </th>
+        <th>company </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of list | paginate: { itemsPerPage: 10, currentPage: p }">
+        <td>{{record.id}}</td>
+        <td>{{record.name}}</td>
+        <td>{{record.username}}</td>
+        <td>
+          <ul>
+            <li>Street:{{record.address.street}}</li>
+            <li>Suite:{{record.address.suite}}</li>
+            <li>City:{{record.address.city}}</li>
+            <li>Zipcode:{{record.address.zipcode}}</li>
+            <li>Geolocation==><br>
+              Latitude{{record.address.geo.lat}}<br>
+              longitude:{{record.address.geo.lng}}</li>
+            </ul>
+          </td>
+          <td>{{record.phone}}</td>
+          <td>{{record.website}}</td>
+          <td><ul>
+            <li>Name:{{record.company.name}}</li>
+            <li>Catch Phrase:{{record.company.catchPhrase}}</li>
+            <li>BS:{{record.company.bs}}</li>
+          </ul></td>
+          <td style="width: 3%;cursor: pointer;" [routerLink]="['/edit-users', record.id]">
+            <!--   -->
+            <!-- test -->
+            <i class="far fa-edit"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>
+</div>
+</div>
